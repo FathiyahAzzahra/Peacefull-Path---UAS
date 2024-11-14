@@ -1,9 +1,26 @@
-app.service("authService", function($http) {
-    this.login = function(data) {
-        return $http.post("/api/login", data);
-    };
+angular.module("myApp")
+    .service("authService", function ($http) {
+        const apiUrl = "/api";
 
-    this.register = function(data) {
-        return $http.post("/api/register", data);
-    };
-});
+        // Fungsi untuk registrasi
+        this.register = function (data) {
+            return $http.post(`${apiUrl}/register`, data)
+                .then(function (response) {
+                    return response.data;  // Mengembalikan response data
+                })
+                .catch(function (error) {
+                    throw error;  // Menangani error
+                });
+        };
+
+        // Fungsi untuk login
+        this.login = function (data) {
+            return $http.post(`${apiUrl}/login`, data)
+                .then(function (response) {
+                    return response.data;  // Mengembalikan response data
+                })
+                .catch(function (error) {
+                    throw error;  // Menangani error
+                });
+        };
+    });

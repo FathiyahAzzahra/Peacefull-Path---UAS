@@ -1,8 +1,11 @@
-const express = require("express");
-const authController = require("../controllers/authController");
+const express = require('express');
 const router = express.Router();
+const authController = require('../controllers/authController');
 
-router.post("/register", authController.register);
-router.post("/login", authController.login);
+// Rute untuk registrasi
+router.post('/register', authController.register);
+
+// Rute untuk login
+router.post('/login', authController.login);
 
 module.exports = router;

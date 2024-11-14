@@ -1,7 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const path = require("path"); // untuk mengakses file secara dinamis
-const authRoutes = require("./routes/authRoutes");
+const path = require("path");
+const authRoutes = require("./routes/authRoutes"); // Pastikan ini diimpor
+require("./config/db"); // Mengimpor file db.js untuk koneksi MongoDB
 const app = express();
 
 // Middleware untuk parsing JSON
@@ -16,30 +17,10 @@ app.get("/", (req, res) => {
 });
 
 // Rute API untuk autentikasi
-app.use("/api", authRoutes);
+app.use("/api", authRoutes); // Pastikan rute ini digunakan
 
+// Menjalankan server
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
-
-const pool = require("./config/db");
-
-const createUsersTable = async () => {
-    try {
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS users (
-                id SERIAL PRIMARY KEY,
-                username VARCHAR(255) UNIQUE NOT NULL,
-                password VARCHAR(255) NOT NULL
-            )
-        `);
-        console.log("Table 'users' created successfully!");
-    } catch (err) {
-        console.error("Error creating table:", err.stack);
-    }
-};
-
-// Panggil fungsi untuk membuat tabel saat server berjalan
-createUsersTable();
-
